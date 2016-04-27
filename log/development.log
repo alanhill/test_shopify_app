@@ -1,0 +1,447 @@
+  [1m[36m (0.8ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.3ms)[0m  select sqlite_version(*)
+  [1m[36m (0.7ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateShops (20160427014220)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from emit_warning_if_null_unspecified at /Users/alanhill/.gem/ruby/2.3.0/gems/activerecord-4.2.6/lib/active_record/connection_adapters/abstract/schema_definitions.rb:63)
+  [1m[35m (0.4ms)[0m  CREATE TABLE "shops" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "shopify_domain" varchar NOT NULL, "shopify_token" varchar NOT NULL, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.5ms)[0m  [1mCREATE UNIQUE INDEX "index_shops_on_shopify_domain" ON "shops" ("shopify_domain")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20160427014220"]]
+  [1m[36m (0.7ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_shops_on_shopify_domain' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_shops_on_shopify_domain' AND type='index'
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_shops_on_shopify_domain' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_shops_on_shopify_domain' AND type='index'
+[0m
+
+
+Started GET "/" for ::1 at 2016-04-26 22:05:21 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by HomeController#index as HTML
+  Rendered inline template (1.3ms)
+Completed 302 Found in 23ms (Views: 9.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/login" for ::1 at 2016-04-26 22:05:21 -0400
+Processing by ShopifyApp::SessionsController#new as HTML
+  Rendered /usr/local/lib/ruby/gems/2.3.0/gems/shopify_app-7.0.2/app/views/shopify_app/sessions/new.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 1056ms (Views: 1054.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/login?shop=alans-tester-site-hard-hats-reqd.myshopify.com" for ::1 at 2016-04-26 22:05:25 -0400
+Processing by ShopifyApp::SessionsController#new as HTML
+  Parameters: {"shop"=>"alans-tester-site-hard-hats-reqd.myshopify.com"}
+  Rendered inline template (0.3ms)
+Completed 200 OK in 3ms (Views: 0.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/auth/shopify?shop=alans-tester-site-hard-hats-reqd.myshopify.com" for ::1 at 2016-04-26 22:05:26 -0400
+
+
+Started GET "/auth/shopify/callback?code=35f0c0934644da8fff7e9e3ab1fbe301&hmac=2a4330ea9104a1ebc09e4b12701967d511ec475bff24fa3a48bdfc064e746f05&shop=alans-tester-site-hard-hats-reqd.myshopify.com&signature=a4203fb22370e6488b2df869735266f8&state=962beecdd8d4ee7602aa1fbbfe9c7b5d7c7fd0e6a5c31db9&timestamp=1461722767" for ::1 at 2016-04-26 22:06:07 -0400
+Processing by ShopifyApp::SessionsController#callback as HTML
+  Parameters: {"code"=>"35f0c0934644da8fff7e9e3ab1fbe301", "hmac"=>"2a4330ea9104a1ebc09e4b12701967d511ec475bff24fa3a48bdfc064e746f05", "shop"=>"alans-tester-site-hard-hats-reqd.myshopify.com", "signature"=>"a4203fb22370e6488b2df869735266f8", "state"=>"962beecdd8d4ee7602aa1fbbfe9c7b5d7c7fd0e6a5c31db9", "timestamp"=>"1461722767"}
+  [1m[35mShop Load (0.5ms)[0m  SELECT  "shops".* FROM "shops" WHERE "shops"."shopify_domain" = ? LIMIT 1  [["shopify_domain", "alans-tester-site-hard-hats-reqd.myshopify.com"]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mShop Exists (0.2ms)[0m  SELECT  1 AS one FROM "shops" WHERE "shops"."shopify_domain" = 'alans-tester-site-hard-hats-reqd.myshopify.com' LIMIT 1
+  [1m[36mSQL (1.3ms)[0m  [1mINSERT INTO "shops" ("shopify_domain", "shopify_token", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["shopify_domain", "alans-tester-site-hard-hats-reqd.myshopify.com"], ["shopify_token", "03c72f8dea166b97beccf0b3ac3d6d46"], ["created_at", "2016-04-27 02:06:08.228730"], ["updated_at", "2016-04-27 02:06:08.228730"]]
+  [1m[35m (0.6ms)[0m  commit transaction
+  Rendered inline template (0.2ms)
+Completed 302 Found in 43ms (Views: 0.6ms | ActiveRecord: 3.1ms)
+
+
+Started GET "/" for ::1 at 2016-04-26 22:06:08 -0400
+Processing by HomeController#index as HTML
+  [1m[36mShop Load (0.2ms)[0m  [1mSELECT  "shops".* FROM "shops" WHERE "shops"."id" = ? LIMIT 1[0m  [["id", 1]]
+  Rendered home/index.html.erb within layouts/embedded_app (4.5ms)
+  Rendered layouts/_flash_messages.html.erb (0.5ms)
+Completed 200 OK in 557ms (Views: 31.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/?hmac=3b40496450ac98687c089e79f2df07c020c2e51d2c316c40c7284389b0f20319&protocol=https%3A%2F%2F&routing_method=shop_from_host&shop=alans-tester-site-hard-hats-reqd.myshopify.com&signature=126544b68eff8da1dbad4727ad3872a0&timestamp=1461722777" for ::1 at 2016-04-26 22:06:18 -0400
+Processing by HomeController#index as HTML
+  Parameters: {"hmac"=>"3b40496450ac98687c089e79f2df07c020c2e51d2c316c40c7284389b0f20319", "protocol"=>"https://", "routing_method"=>"shop_from_host", "shop"=>"alans-tester-site-hard-hats-reqd.myshopify.com", "signature"=>"126544b68eff8da1dbad4727ad3872a0", "timestamp"=>"1461722777"}
+  [1m[35mShop Load (0.1ms)[0m  SELECT  "shops".* FROM "shops" WHERE "shops"."id" = ? LIMIT 1  [["id", 1]]
+  Rendered home/index.html.erb within layouts/embedded_app (2.8ms)
+  Rendered layouts/_flash_messages.html.erb (0.3ms)
+Completed 200 OK in 330ms (Views: 21.1ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for ::1 at 2016-04-26 22:06:19 -0400
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-04-26 22:06:19 -0400
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2016-04-26 22:06:19 -0400
+
+
+Started GET "/assets/application.self-3b8dabdc891efe46b9a144b400ad69e37d7e5876bdc39dee783419a69d7ca819.js?body=1" for ::1 at 2016-04-26 22:06:19 -0400
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-04-26 22:06:19 -0400
+
+
+Started GET "/?hmac=c6a6d13d827febaeaa249308d1b3375d800e224943a9450a9ae98e702a82d3f5&protocol=https%3A%2F%2F&routing_method=shop_from_host&shop=alans-tester-site-hard-hats-reqd.myshopify.com&signature=e7f2fc1e8052c0ce7fe2319c280a72e0&timestamp=1461722814" for ::1 at 2016-04-26 22:06:56 -0400
+Processing by HomeController#index as HTML
+  Parameters: {"hmac"=>"c6a6d13d827febaeaa249308d1b3375d800e224943a9450a9ae98e702a82d3f5", "protocol"=>"https://", "routing_method"=>"shop_from_host", "shop"=>"alans-tester-site-hard-hats-reqd.myshopify.com", "signature"=>"e7f2fc1e8052c0ce7fe2319c280a72e0", "timestamp"=>"1461722814"}
+  Rendered inline template (0.5ms)
+Completed 302 Found in 8ms (Views: 1.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/login?shop=alans-tester-site-hard-hats-reqd.myshopify.com" for ::1 at 2016-04-26 22:06:56 -0400
+Processing by ShopifyApp::SessionsController#new as HTML
+  Parameters: {"shop"=>"alans-tester-site-hard-hats-reqd.myshopify.com"}
+  Rendered inline template (0.3ms)
+Completed 200 OK in 2ms (Views: 0.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/auth/shopify?shop=alans-tester-site-hard-hats-reqd.myshopify.com" for ::1 at 2016-04-26 22:06:57 -0400
+
+
+Started GET "/auth/shopify/callback?code=fbc47b1eafc1a3b7d2d9d569057dae86&hmac=8504e95a1d112539f4a5421ea82f7500c5531640bf1705be42a748395ff8ea81&shop=alans-tester-site-hard-hats-reqd.myshopify.com&signature=1998c717bbf44e9f40d003171735ccc2&state=c8325412d84231ac05f8fdba5c1609b437eed93634c2d8ef&timestamp=1461722818" for ::1 at 2016-04-26 22:06:58 -0400
+Processing by ShopifyApp::SessionsController#callback as HTML
+  Parameters: {"code"=>"fbc47b1eafc1a3b7d2d9d569057dae86", "hmac"=>"8504e95a1d112539f4a5421ea82f7500c5531640bf1705be42a748395ff8ea81", "shop"=>"alans-tester-site-hard-hats-reqd.myshopify.com", "signature"=>"1998c717bbf44e9f40d003171735ccc2", "state"=>"c8325412d84231ac05f8fdba5c1609b437eed93634c2d8ef", "timestamp"=>"1461722818"}
+  [1m[36mShop Load (0.1ms)[0m  [1mSELECT  "shops".* FROM "shops" WHERE "shops"."shopify_domain" = ? LIMIT 1[0m  [["shopify_domain", "alans-tester-site-hard-hats-reqd.myshopify.com"]]
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mShop Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "shops" WHERE ("shops"."shopify_domain" = 'alans-tester-site-hard-hats-reqd.myshopify.com' AND "shops"."id" != 1) LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  commit transaction
+  Rendered inline template (0.9ms)
+Completed 302 Found in 5ms (Views: 1.2ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/auth/shopify?shop=alans-tester-site-hard-hats-reqd.myshopify.com" for ::1 at 2016-04-26 22:06:58 -0400
+
+
+Started GET "/?hmac=c6a6d13d827febaeaa249308d1b3375d800e224943a9450a9ae98e702a82d3f5&protocol=https%3A%2F%2F&routing_method=shop_from_host&shop=alans-tester-site-hard-hats-reqd.myshopify.com&signature=e7f2fc1e8052c0ce7fe2319c280a72e0&timestamp=1461722814" for ::1 at 2016-04-26 22:06:58 -0400
+Processing by HomeController#index as HTML
+  Parameters: {"hmac"=>"c6a6d13d827febaeaa249308d1b3375d800e224943a9450a9ae98e702a82d3f5", "protocol"=>"https://", "routing_method"=>"shop_from_host", "shop"=>"alans-tester-site-hard-hats-reqd.myshopify.com", "signature"=>"e7f2fc1e8052c0ce7fe2319c280a72e0", "timestamp"=>"1461722814"}
+  [1m[36mShop Load (0.2ms)[0m  [1mSELECT  "shops".* FROM "shops" WHERE "shops"."id" = ? LIMIT 1[0m  [["id", 1]]
+  Rendered home/index.html.erb within layouts/embedded_app (1.9ms)
+  Rendered layouts/_flash_messages.html.erb (0.1ms)
+Completed 200 OK in 341ms (Views: 16.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/auth/shopify/callback?code=e669b25b2095d0ce1b7510cd595800fa&hmac=d004650112ea83156d6aec35521153f2e28b101f59fda0c380274219c05b87a7&shop=alans-tester-site-hard-hats-reqd.myshopify.com&signature=1f4283102cc3207b2201095d78ffa7e3&state=b2d6630c13e382a3db79aefa9213de319650966a7f71264a&timestamp=1461722819" for ::1 at 2016-04-26 22:06:59 -0400
+Processing by ShopifyApp::SessionsController#callback as HTML
+  Parameters: {"code"=>"e669b25b2095d0ce1b7510cd595800fa", "hmac"=>"d004650112ea83156d6aec35521153f2e28b101f59fda0c380274219c05b87a7", "shop"=>"alans-tester-site-hard-hats-reqd.myshopify.com", "signature"=>"1f4283102cc3207b2201095d78ffa7e3", "state"=>"b2d6630c13e382a3db79aefa9213de319650966a7f71264a", "timestamp"=>"1461722819"}
+  [1m[35mShop Load (0.2ms)[0m  SELECT  "shops".* FROM "shops" WHERE "shops"."shopify_domain" = ? LIMIT 1  [["shopify_domain", "alans-tester-site-hard-hats-reqd.myshopify.com"]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mShop Exists (0.2ms)[0m  SELECT  1 AS one FROM "shops" WHERE ("shops"."shopify_domain" = 'alans-tester-site-hard-hats-reqd.myshopify.com' AND "shops"."id" != 1) LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mcommit transaction[0m
+  Rendered inline template (0.8ms)
+Completed 302 Found in 6ms (Views: 1.3ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/?hmac=dba917476c4f06bc396bc86c4020cd5be259be88d3ce9f45d6844d06108b8c6d&protocol=https%3A%2F%2F&routing_method=shop_from_host&shop=alans-tester-site-hard-hats-reqd.myshopify.com&signature=a1a3cb58e4c5846131e9195505341f78&timestamp=1461722819" for ::1 at 2016-04-26 22:07:00 -0400
+Processing by HomeController#index as HTML
+  Parameters: {"hmac"=>"dba917476c4f06bc396bc86c4020cd5be259be88d3ce9f45d6844d06108b8c6d", "protocol"=>"https://", "routing_method"=>"shop_from_host", "shop"=>"alans-tester-site-hard-hats-reqd.myshopify.com", "signature"=>"a1a3cb58e4c5846131e9195505341f78", "timestamp"=>"1461722819"}
+  [1m[35mShop Load (0.1ms)[0m  SELECT  "shops".* FROM "shops" WHERE "shops"."id" = ? LIMIT 1  [["id", 1]]
+  Rendered home/index.html.erb within layouts/embedded_app (1.2ms)
+  Rendered layouts/_flash_messages.html.erb (0.2ms)
+Completed 200 OK in 318ms (Views: 17.6ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/" for ::1 at 2016-04-26 22:13:19 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by HomeController#index as HTML
+  Rendered inline template (1.7ms)
+Completed 302 Found in 51ms (Views: 16.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/login" for ::1 at 2016-04-26 22:13:19 -0400
+Processing by ShopifyApp::SessionsController#new as HTML
+  Rendered /usr/local/lib/ruby/gems/2.3.0/bundler/gems/shopify_app-02d2f264ad2c/app/views/shopify_app/sessions/new.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 546ms (Views: 442.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/?hmac=d74761530f12abea79b8b12540f2bdde01f74dff59ef5646228f7ea713fd9776&protocol=https%3A%2F%2F&routing_method=shop_from_host&shop=alans-tester-site-hard-hats-reqd.myshopify.com&signature=1c80bc50c28ed24b17319f4c91fd4921&timestamp=1461723218" for ::1 at 2016-04-26 22:13:40 -0400
+Processing by HomeController#index as HTML
+  Parameters: {"hmac"=>"d74761530f12abea79b8b12540f2bdde01f74dff59ef5646228f7ea713fd9776", "protocol"=>"https://", "routing_method"=>"shop_from_host", "shop"=>"alans-tester-site-hard-hats-reqd.myshopify.com", "signature"=>"1c80bc50c28ed24b17319f4c91fd4921", "timestamp"=>"1461723218"}
+  Rendered inline template (0.2ms)
+Completed 302 Found in 4ms (Views: 0.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/login?shop=alans-tester-site-hard-hats-reqd.myshopify.com" for ::1 at 2016-04-26 22:13:40 -0400
+Processing by ShopifyApp::SessionsController#new as HTML
+  Parameters: {"shop"=>"alans-tester-site-hard-hats-reqd.myshopify.com"}
+  Rendered inline template (0.4ms)
+Completed 200 OK in 3ms (Views: 0.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/auth/shopify?shop=alans-tester-site-hard-hats-reqd.myshopify.com" for ::1 at 2016-04-26 22:13:42 -0400
+
+
+Started GET "/auth/shopify?shop=alans-tester-site-hard-hats-reqd.myshopify.com" for ::1 at 2016-04-26 22:13:42 -0400
+
+
+Started GET "/auth/shopify/callback?code=7d2d5cd5551b0f5eddec27ce53d907d0&hmac=04b97f7b5b5b0467107ebcc61455d34b4f52d49b85bfa35292aad388d547622e&shop=alans-tester-site-hard-hats-reqd.myshopify.com&signature=8bf951cf500160eb8c655c9dc315ad8f&state=aacbe85a7e58a3a3c1539e43b1b8cd1a92e8f929099ef196&timestamp=1461723222" for ::1 at 2016-04-26 22:13:42 -0400
+
+OmniAuth::Strategies::OAuth2::CallbackError (csrf_detected | CSRF detected):
+  omniauth (1.3.1) lib/omniauth/failure_endpoint.rb:25:in `raise_out!'
+  omniauth (1.3.1) lib/omniauth/failure_endpoint.rb:20:in `call'
+  omniauth (1.3.1) lib/omniauth/failure_endpoint.rb:12:in `call'
+  omniauth (1.3.1) lib/omniauth/strategy.rb:479:in `fail!'
+  omniauth-oauth2 (1.4.0) lib/omniauth/strategies/oauth2.rb:71:in `callback_phase'
+  omniauth-shopify-oauth2 (1.1.14) lib/omniauth/strategies/shopify.rb:99:in `callback_phase'
+  omniauth (1.3.1) lib/omniauth/strategy.rb:227:in `callback_call'
+  omniauth (1.3.1) lib/omniauth/strategy.rb:184:in `call!'
+  omniauth (1.3.1) lib/omniauth/strategy.rb:164:in `call'
+  omniauth (1.3.1) lib/omniauth/builder.rb:63:in `call'
+  rack (1.6.4) lib/rack/etag.rb:24:in `call'
+  rack (1.6.4) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.6.4) lib/rack/head.rb:13:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.4) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.4) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+  activerecord (4.2.6) lib/active_record/migration.rb:377:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.6) lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+  activesupport (4.2.6) lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  activesupport (4.2.6) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/Cellar/ruby/2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/Cellar/ruby/2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/Cellar/ruby/2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (6.8ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (4.6ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.7ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (57.6ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.9ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.9ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (1.1ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (57.7ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.4ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (117.6ms)
+
+
+Started GET "/auth/shopify/callback?code=7d2d5cd5551b0f5eddec27ce53d907d0&hmac=c3ec826458a04a69b83d811e274a2c548ef477213b39a9e3049b7d4a68686467&shop=alans-tester-site-hard-hats-reqd.myshopify.com&signature=1106fe51a4ff3cb130a27fb6896b9ad8&state=8a328e397c2f94454f961e1e38aec87d6a6c0f34c3c00b1c&timestamp=1461723222" for ::1 at 2016-04-26 22:13:43 -0400
+
+OAuth2::Error (<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>400 - Oauth error invalid_request</title>
+  <style type="text/css">
+
+    * { border:0; margin:0; padding:0; -moz-box-sizing:border-box; -webkit-box-sizing:border-box; box-sizing:border-box; }
+    html,body { height:100%; border:0; margin:0; padding:0; font-family:"Helvetica Neue", Helvetica, Arial, sans-serif; font-weight:300; background:#fff; }
+    body { min-height:100%; font-size:16px; line-height:22px; color:#6c6c6c; }
+    a { color:#479ccf; }
+
+    h1,h2,h3,h4,h5,h6 { text-align:left; margin:0 0 20px 0; color:#31373D; font-weight:700; }
+    h1 { font-size:28px; line-height:48px; margin-bottom:7px; }
+    h2 { font-size:20px; font-weight:300; line-height:30px; color:#6c6c6c; }
+    h3 { font-size:17px; line-height:30px; position:relative; padding-bottom:18px; margin-bottom:22px; font-weight:400; }
+    h3:after { content:""; position:absolute; left:0; bottom:0; height:2px; width:76px; background:#EAEAEA; }
+    h4 { font-size:14px; margin-bottom:3px; }
+
+    img { max-width:100%; }
+
+    li { margin-bottom:5px; }
+
+    .ico { display:inline-block; }
+    .ico svg { background-size:contain; background-position:center; width:24px; height:24px; margin-bottom:5px; }
+
+    .wrapper { min-width:320px; max-width:650px; margin:0 auto; padding:20px; }
+
+    .hero { margin-bottom:30px; }
+
+    .content--block { position:relative; margin-bottom:50px; }
+    .content--desc { margin-bottom:32px; position:relative; }
+    .content--desc-large { font-size:20px; line-height:28px; }
+
+    .request-id { padding-top:100px; font-size:13px; color:#ccc; }
+
+    @media all and (min-width:500px) {
+      body { padding:60px 0; }
+      .wrapper { padding:20px 20px 20px 100px; }
+      .ico svg { width:40px; height:40px; margin-bottom:0; }
+      .hero { margin-bottom:70px; }
+      .content--block { margin-bottom:80px; }
+      .content--desc .ico { position:absolute; left:-70px; top:-7px; }
+    }
+
+    @media all and (min-width:900px) {
+      .wrapper { padding:20px; }
+    }
+
+  </style>
+</head>
+
+<body class="status-error status-code-500">
+
+  <div class="wrapper">
+    <div class="hero">
+      <svg width="160px" height="176px" viewBox="0 0 160 176" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+        <title>shopify-bag-outline</title>
+        <desc>Created with Sketch.</desc>
+        <defs></defs>
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+          <g id="user-action-required-2" sketch:type="MSArtboardGroup" transform="translate(-297.000000, -81.000000)" stroke="#979797" stroke-dasharray="5">
+            <g id="shopify-bag-outline" sketch:type="MSLayerGroup" transform="translate(298.000000, 82.000000)">
+              <path d="M138.817711,32.9976853 C138.371951,32.7161619 137.887187,32.6604147 137.887187,32.6604147 L123.887534,31.6151547 L113.584904,21.3716063 C113.200436,21.0733588 112.749104,20.9005425 112.286628,20.8085596 L104.647414,174.188624 L158.389365,162.551396 L139.402771,34.070819 C139.402771,34.070819 139.257899,33.2847834 138.817711,32.9976853" id="Fill-1" sketch:type="MSShapeGroup"></path>
+              <path d="M104.652986,20.8643068 L99.4292354,22.483763 C97.1196409,15.7244147 93.9714603,10.8994944 90.0264836,8.10655958 C87.070537,6.01325214 83.8137024,5.13244635 80.3144857,5.408395 C79.5984836,4.46347992 78.8323334,3.59939829 77.9742453,2.90534562 C74.1100625,-0.222072416 69.1286936,-0.707073074 63.1694384,1.45591837 C45.436545,7.89750757 37.8224056,30.7622225 35.033619,42.4328993 L19.170132,47.3470151 C19.170132,47.3470151 15.5009693,48.3894878 14.6400951,49.4235984 C13.6956409,50.558054 13.5117649,53.615788 13.5117649,53.615788 L0.300550361,155.58857 L99.4988854,174.183049 L107.138099,20.7778986 C106.043201,20.5632719 104.926014,20.8001975 104.652986,20.8643068 L104.652986,20.8643068 Z M87.081681,12.7586636 C90.1602116,14.9383792 92.375082,19.3061725 93.9491723,24.1812653 L85.6218167,26.7595734 C85.6134587,26.1630783 85.6106727,25.5693706 85.5855987,24.9533641 C85.3850067,19.5932706 84.6550745,15.0777472 83.4153043,11.4207307 C84.7470126,11.5628861 85.9756388,11.9754154 87.081681,12.7586636 L87.081681,12.7586636 Z M62.4868683,33.9286636 C64.7825327,25.0620711 69.1621256,16.0561106 77.4671932,12.5273127 C79.1972995,17.0205372 79.6987796,23.1471547 79.6653476,28.6048058 L62.4868683,33.9286636 L62.4868683,33.9286636 Z M65.2115768,7.08638578 C68.8083035,5.77911389 71.558086,5.87109677 73.6531584,7.23969059 C62.5453743,12.3544964 57.6503714,25.0955194 55.513509,36.0888677 L41.7952423,40.3395918 C44.9099909,29.1929388 51.7774822,11.964266 65.2115768,7.08638578 L65.2115768,7.08638578 Z M74.6366166,82.0524358 C73.8509645,81.6705675 72.9204403,81.2608255 71.8673321,80.8705951 C70.8225819,80.4831521 69.6608197,80.1124332 68.4015474,79.8058236 C67.1506332,79.499214 65.8077809,79.2511389 64.3897067,79.1034088 C62.9883484,78.9612535 61.5173401,78.9138683 59.9906118,79.0030639 C58.5892535,79.0866847 57.3188373,79.3347597 56.2016511,79.7333522 C55.0956089,80.1291573 54.1344387,80.6726926 53.3432145,81.3472337 C52.5547764,82.0217749 51.9307123,82.8245346 51.4905242,83.7499381 C51.0531221,84.669767 50.79681,85.7122396 50.746662,86.8634194 C50.710444,87.7163515 50.8413861,88.5358354 51.1422741,89.3330204 C51.4431622,90.1302054 51.9112103,90.9106662 52.5519904,91.6883397 C53.1927705,92.4688005 54.0062827,93.246474 54.9925269,94.0380843 C55.984343,94.8352693 57.1572493,95.6519658 58.5112455,96.4965359 C60.4057259,97.7090375 62.3419963,99.0804187 64.1863286,100.65249 C66.055735,102.24686 67.8248453,104.044707 69.3460016,106.093417 C70.8838739,108.167213 72.1626481,110.489084 73.0263083,113.095265 C73.8955405,115.718171 74.3357286,118.614238 74.1964285,121.805766 C73.9707625,127.023704 72.8285023,131.522503 70.9368079,135.254778 C69.0701876,138.936881 66.4931371,141.832948 63.3895325,143.929043 C60.3555779,145.98054 56.8396452,147.254363 53.0144665,147.76445 C49.3035138,148.263388 45.319533,148.040399 41.2157542,147.134507 C41.1823222,147.126145 41.1488902,147.117783 41.1182442,147.112208 C41.0848122,147.106633 41.0541662,147.098271 41.0207342,147.089909 C40.9873022,147.084334 40.9538702,147.075972 40.9232242,147.06761 C40.8897921,147.059248 40.8591461,147.053673 40.8257141,147.045311 C38.9005878,146.579822 37.0423254,145.972178 35.2955031,145.266976 C33.5765407,144.570136 31.9606604,143.778525 30.4924382,142.922806 C29.0409319,142.075448 27.7287256,141.169556 26.5920374,140.230216 C25.4664932,139.302025 24.510895,138.340386 23.7614609,137.378747 L28.2914977,122.340939 C29.0548619,122.987606 29.9909581,123.720682 31.0552103,124.467695 C32.1306065,125.225856 33.3397307,126.000743 34.6352209,126.725456 C35.9446412,127.455745 37.3432135,128.13586 38.7835757,128.687758 C40.240654,129.248017 41.7423083,129.677271 43.2300326,129.897472 C44.5422388,130.0898 45.7151451,130.050777 46.7431793,129.819426 C47.7767855,129.585288 48.6599476,129.156034 49.3843078,128.570689 C50.1086679,127.982556 50.674226,127.235543 51.0642661,126.379824 C51.4598782,125.521317 51.6827582,124.554103 51.7273342,123.519992 C51.7719102,122.483094 51.6771862,121.510305 51.4180882,120.562603 C51.1589901,119.614901 50.735518,118.700646 50.1225979,117.780818 C49.5124638,116.866564 48.7212396,115.949522 47.7210655,115.00182 C46.7320353,114.059692 45.542413,113.089691 44.1326968,112.061155 C42.4053764,110.770607 40.7783521,109.368565 39.3240598,107.846666 C37.8836976,106.341492 36.6104953,104.713673 35.5657451,102.9437 C34.5321389,101.193238 33.7186268,99.2978328 33.1920727,97.2435484 C32.6655186,95.1948387 32.4231365,92.9788874 32.5290045,90.5650336 C32.7045226,86.5289361 33.5124627,82.8078104 34.860887,79.4574036 C36.2232413,76.0735484 38.1567256,73.0353259 40.5805461,70.4207821 C43.0545146,67.7532785 46.0578231,65.5038789 49.5236078,63.7729282 C53.0869025,61.9918051 57.1656073,60.7430678 61.6789281,60.1493601 C63.7767865,59.8761988 65.7854929,59.7451929 67.6883313,59.7368308 C69.6162437,59.7284687 71.42993,59.8427505 73.1015303,60.0573772 C74.7926326,60.2720039 76.3332909,60.5869756 77.6984312,60.9716313 C79.0775015,61.3618618 80.2699097,61.8245635 81.2533679,62.3262883 L74.6366166,82.0524358 L74.6366166,82.0524358 Z" id="Fill-10" sketch:type="MSShapeGroup"></path>
+          </g>
+        </g>
+      </g>
+    </svg>
+    </div>
+    <div class="content">
+      <div class="content--block">
+        <div class="content--desc">
+          <i class="ico ico-svg ico-40-svg">
+            <svg viewBox="0 0 40 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                <g id="back-soon-3" sketch:type="MSArtboardGroup" transform="translate(-230.000000, -519.000000)">
+                  <g id="what-went-wrong?" sketch:type="MSLayerGroup" transform="translate(231.000000, 444.000000)">
+                    <g id="warning" transform="translate(0.000000, 77.000000)" sketch:type="MSShapeGroup">
+                      <path d="M17.593,0.492 C18.217,-0.589 19.778,-0.589 20.402,0.492 L37.766,30.567 C38.39,31.648 37.61,33 36.361,33 L1.634,33 C0.386,33 -0.395,31.648 0.229,30.567 L17.593,0.492 L17.593,0.492 Z" id="Stroke-1" stroke="#E9BE33" stroke-width="2" stroke-linejoin="round"></path>
+                      <path d="M20.75,28 C20.75,28.966 19.966,29.75 19,29.75 C18.033,29.75 17.25,28.966 17.25,28 C17.25,27.034 18.033,26.25 19,26.25 C19.966,26.25 20.75,27.034 20.75,28" id="Fill-2" fill="#E9BE33"></path>
+                      <path d="M19,23 L19,8" id="Stroke-3" stroke="#E9BE33" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </i>
+          <p class="content--desc-large">Oops, something went wrong.</p>
+        </div>
+      </div>
+      <div class="content--block">
+        <h3>What happened?</h3>
+        <div class="content--desc">
+          Oauth error invalid_request: 
+        </div>
+      </div>
+      <div class="content--block">
+        <h3>What can I do?</h3>
+        <div class="content--desc">
+          <ul>
+            <li>Press the back button on your browser.</li>
+            <li>Return to your <a href="/admin">admin dashboard</a>.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="request-id">Request ID: cbcd9789-aba3-44e5-92f8-90973e4f8260</div>
+  </div>
+</body>
+</html>
+):
+  oauth2 (1.1.0) lib/oauth2/client.rb:113:in `request'
+  oauth2 (1.1.0) lib/oauth2/client.rb:138:in `get_token'
+  oauth2 (1.1.0) lib/oauth2/strategy/auth_code.rb:29:in `get_token'
+  omniauth-oauth2 (1.4.0) lib/omniauth/strategies/oauth2.rb:89:in `build_access_token'
+  omniauth-shopify-oauth2 (1.1.14) lib/omniauth/strategies/shopify.rb:103:in `build_access_token'
+  omniauth-shopify-oauth2 (1.1.14) lib/omniauth/strategies/shopify.rb:94:in `callback_phase'
+  omniauth (1.3.1) lib/omniauth/strategy.rb:227:in `callback_call'
+  omniauth (1.3.1) lib/omniauth/strategy.rb:184:in `call!'
+  omniauth (1.3.1) lib/omniauth/strategy.rb:164:in `call'
+  omniauth (1.3.1) lib/omniauth/builder.rb:63:in `call'
+  rack (1.6.4) lib/rack/etag.rb:24:in `call'
+  rack (1.6.4) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.6.4) lib/rack/head.rb:13:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/params_parser.rb:27:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.4) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.4) lib/rack/session/abstract/id.rb:220:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+  activerecord (4.2.6) lib/active_record/migration.rb:377:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.6) lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+  activesupport (4.2.6) lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  activesupport (4.2.6) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.6) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.6) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.6) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.6) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.6) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.6) lib/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.6) lib/rails/engine.rb:518:in `call'
+  railties (4.2.6) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/local/Cellar/ruby/2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/local/Cellar/ruby/2.3.0/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/local/Cellar/ruby/2.3.0/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (2.8ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.5ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (84.6ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.3ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (67.2ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /Users/alanhill/.gem/ruby/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (139.5ms)
